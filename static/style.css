@@ -1,0 +1,193 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: #f4f5fb;
+    color: #25243a;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 240px;
+    background: #17172e;
+    color: white;
+    padding: 30px 20px;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 45px;
+}
+
+.logo span {
+    color: #a78bfa;
+}
+
+.sidebar h4 {
+    color: #9999b5;
+    font-size: 12px;
+    margin: 25px 10px 15px;
+}
+
+.sidebar a {
+    display: block;
+    color: #d0cee5;
+    text-decoration: none;
+    padding: 13px 15px;
+    margin-bottom: 8px;
+    border-radius: 9px;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    background: #39345f;
+    color: white;
+}
+
+/* Main content */
+.main {
+    flex: 1;
+    padding: 35px 45px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+}
+
+.topbar h2 {
+    font-size: 26px;
+}
+
+.profile {
+    background: white;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-weight: 600;
+}
+
+.welcome {
+    margin-bottom: 25px;
+}
+
+.welcome h1 {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.welcome p {
+    color: #77768c;
+}
+
+/* Generator card */
+.generator-card {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.04);
+    max-width: 900px;
+}
+
+.generator-card h2 {
+    margin-bottom: 12px;
+}
+
+.generator-card p {
+    color: #77768c;
+    margin-bottom: 22px;
+}
+
+textarea {
+    width: 100%;
+    padding: 18px;
+    border: 1px solid #dddbea;
+    border-radius: 10px;
+    resize: vertical;
+    font-size: 15px;
+    outline: none;
+    margin-bottom: 20px;
+}
+
+textarea:focus {
+    border-color: #8065e8;
+}
+
+button {
+    background: #7355df;
+    color: white;
+    border: none;
+    padding: 14px 25px;
+    border-radius: 9px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #5d40c5;
+}
+
+/* Generated result */
+.result-card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    margin-top: 25px;
+    max-width: 900px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.result-card h2 {
+    margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 180px;
+    }
+
+    .main {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 550px) {
+    .sidebar {
+        display: none;
+    }
+}
+
+/* Generated content action buttons */
+.result-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.result-actions button {
+    padding: 11px 20px;
+}
+
+.download-btn {
+    background: #25243a;
+}
+
+.download-btn:hover {
+    background: #403e59;
+}

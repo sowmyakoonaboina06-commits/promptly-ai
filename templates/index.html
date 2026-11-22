@@ -1,0 +1,283 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Promptly AI - Dashboard</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+    
+    <style>
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .logout-btn:hover {
+            background: #b52a37;
+        }
+
+        .history-link {
+            display: block;
+            color: #d0cee5;
+            text-decoration: none;
+            padding: 13px 15px;
+            margin-bottom: 8px;
+            border-radius: 9px;
+        }
+
+        .history-link:hover {
+            background: #39345f;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            Promptly<span> AI</span>
+        </div>
+
+        <h4>WORKSPACE</h4>
+
+        <a href="/"
+           class="{{ 'active' if selected_tool == 'general' else '' }}">
+            🏠 Dashboard
+        </a>
+
+        <a href="/?tool=general"
+           class="{{ 'active' if selected_tool == 'general' else '' }}">
+            ✍️ Content Generator
+        </a>
+
+        <a href="/history" class="history-link">
+            📚 Generation History
+        </a>
+
+        <a href="#result">
+            📄 Generated Content
+        </a>
+
+        <!-- AI Tools -->
+        <h4>AI TOOLS</h4>
+
+        <a href="/?tool=blog"
+           class="{{ 'active' if selected_tool == 'blog' else '' }}">
+            📝 Blog Writer
+        </a>
+
+        <a href="/?tool=social"
+           class="{{ 'active' if selected_tool == 'social' else '' }}">
+            📱 Social Media
+        </a>
+
+        <a href="/?tool=email"
+           class="{{ 'active' if selected_tool == 'email' else '' }}">
+            📧 Email Writer
+        </a>
+
+        <a href="/?tool=summary"
+           class="{{ 'active' if selected_tool == 'summary' else '' }}">
+            📑 Text Summarizer
+        </a>
+
+        <a href="/?tool=sentiment"
+           class="{{ 'active' if selected_tool == 'sentiment' else '' }}">
+            ❤️ Sentiment Analyzer
+        </a>
+
+    </aside>
+
+
+    <!-- Main Dashboard -->
+    <main class="main">
+
+        <!-- Top Bar -->
+        <div class="topbar">
+
+            <h2>Dashboard</h2>
+
+            <div class="profile">
+                <span>👤 {{ user_name }}</span>
+
+                <a href="{{ url_for('logout') }}" class="logout-btn">
+                    Logout
+                </a>
+            </div>
+
+        </div>
+
+
+        <!-- Welcome Section -->
+        <section class="welcome">
+
+            <h1>Welcome, {{ user_name }}! 👋</h1>
+
+            <p>
+                Create amazing content faster with the power
+                of Artificial Intelligence.
+            </p>
+
+        </section>
+
+
+        <!-- AI Generator Section -->
+        <section class="generator-card" id="generator">
+
+            <h2>✨ {{ tool.title }}</h2>
+
+            <p>
+                {{ tool.description }}
+            </p>
+
+            <form method="POST">
+
+                <input
+                    type="hidden"
+                    name="tool"
+                    value="{{ selected_tool }}"
+                >
+
+                <textarea
+                    name="prompt"
+                    id="prompt"
+                    placeholder="{{ tool.placeholder }}"
+                    rows="7"
+                    required>{{ user_prompt or '' }}</textarea>
+
+                <br>
+
+                <button type="submit">
+                    ✨ Generate Content
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- Generated Content Section -->
+        <section class="result-card" id="result">
+
+            <h2>📄 Generated Content</h2>
+
+            {% if generated_content %}
+
+                <div id="generatedText">{{ generated_content }}</div>
+
+                <!-- Copy and Download Buttons -->
+                <div class="result-actions">
+
+                    <button
+                        type="button"
+                        onclick="copyContent()">
+                        📋 Copy Content
+                    </button>
+
+                    <button
+                        type="button"
+                        class="download-btn"
+                        onclick="downloadContent()">
+                        ⬇️ Download Content
+                    </button>
+
+                </div>
+
+            {% else %}
+
+                <p>
+                    Your AI-generated content will appear here.
+                </p>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- JavaScript Functions -->
+<script>
+
+// Copy generated content
+function copyContent() {
+
+    const content = document.getElementById("generatedText");
+
+    if (!content) {
+        return;
+    }
+
+    navigator.clipboard.writeText(content.innerText)
+
+        .then(() => {
+            alert("Content copied successfully!");
+        })
+
+        .catch(() => {
+            alert("Unable to copy content. Please try again.");
+        });
+
+}
+
+
+// Download generated content
+function downloadContent() {
+
+    const content = document.getElementById("generatedText");
+
+    if (!content) {
+        return;
+    }
+
+    const text = content.innerText;
+
+    const blob = new Blob([text], {
+        type: "text/plain;charset=utf-8"
+    });
+
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+
+    link.href = url;
+
+    link.download = "Promptly_AI_Content.txt";
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    document.body.removeChild(link);
+
+    URL.revokeObjectURL(url);
+
+}
+
+</script>
+
+</body>
+</html>
